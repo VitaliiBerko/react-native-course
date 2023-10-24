@@ -1,4 +1,4 @@
-import { Image, ImageBackground, StyleSheet, View } from "react-native";
+import { Dimensions, Image, ImageBackground, StyleSheet, View } from "react-native";
 
 // import backgroundImage from "../assets/images/background.jpg";
 
@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-end',
+    // alignItems: 'center'
+    // width: Dimensions.get(window).width,
+    // height: Dimensions.get(window).height
   },
 });
