@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 export default function Input({
@@ -6,15 +7,24 @@ export default function Input({
   placeholder = "",
   keyboardType = "default",
 }) {
+  const [isInputFocus, setIsInputFocus] = useState(false);
+  const inputFocusStyles = {
+    borderColor: "#FF6C00",
+    backgroundColor: "#ffff",
+  };
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={
+          isInputFocus ? { ...styles.input, ...inputFocusStyles } : styles.input
+        }
         value={value}
         placeholder={placeholder}
         placeholderTextColor="#BDBDBD"
         keyboardType={keyboardType}
-        onChange={(text)=>setValue(text)}
+        onChange={(text) => {setValue(text)}}
+        onFocus={()=>{setIsInputFocus(true)}}
+        onBlur={()=>{setIsInputFocus(false)}}
       />
     </View>
   );
