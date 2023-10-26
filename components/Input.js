@@ -22,9 +22,9 @@ export default function Input({
         placeholder={placeholder}
         placeholderTextColor="#BDBDBD"
         keyboardType={keyboardType}
-        onChange={(text) => {setValue(text)}}
-        onFocus={()=>{setIsInputFocus(true)}}
-        onBlur={()=>{setIsInputFocus(false)}}
+        onChange={(text) => setValue(text)}
+        onFocus={()=>setIsInputFocus(true)}
+        onBlur={()=>setIsInputFocus(false)}
       />
     </View>
   );

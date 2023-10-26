@@ -6,9 +6,9 @@ import { Dimensions, Image, ImageBackground, StyleSheet, View } from "react-nati
 
 
 
-export default function MainContainer({ children }) {
+export default function MainContainer({ children, ...props }) {
   return (
-    <View style={styles.container}>
+    <View {...props} style={styles.container}>
       <ImageBackground style={styles.image} source={require('../assets/images/background.jpg')}>
         {children}
       </ImageBackground>
@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: 'flex-end',
-    // alignItems: 'center'
-    // width: Dimensions.get(window).width,
-    // height: Dimensions.get(window).height
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
   },
 });

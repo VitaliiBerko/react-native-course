@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet} from "react-native";
 import { useFonts } from "expo-font";
-import { StatusBar } from "expo-status-bar";
-import LoginScreen from "./Screens/auth/LoginScreen";
+
+import React from "react";
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
-import Input from "./components/Input";
+import LoginScreen from "./Screens/auth/LoginScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,15 +15,11 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  return (
-    // <View style={styles.container}>
-    //   <Text style={styles.title}>Hello world! Hello world! </Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    <>
 
-      <RegistrationScreen/>
-    </>
+  return (
+
+      <LoginScreen/>
+ 
   );
 }
 const styles = StyleSheet.create({
