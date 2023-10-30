@@ -5,6 +5,7 @@ import Input from "./Input";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
+  const [password, setPassword]= useState("")
   return (
     <>
       <Text style ={styles.title}>Увійти</Text>
@@ -16,7 +17,7 @@ export default function LoginForm() {
           keyboardType="email-address"
           placeholder = 'Адреса електронної пошти'
         />
-        <InputPassword/>
+        <InputPassword password={password} setPassword={setPassword}/>
       </View>
     </>
   );
