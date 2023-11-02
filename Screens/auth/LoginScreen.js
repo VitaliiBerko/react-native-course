@@ -15,7 +15,7 @@ export default function LoginScreen() {
       <MainContainer>
         <KeyboardAvoidingView
           style={styles.form}
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
            <LoginForm/> 
         </KeyboardAvoidingView>

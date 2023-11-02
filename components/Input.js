@@ -22,7 +22,7 @@ export default function Input({
         placeholder={placeholder}
         placeholderTextColor="#BDBDBD"
         keyboardType={keyboardType}
-        onChange={(text) => setValue(text)}
+        onChangeText={setValue}
         onFocus={()=>setIsInputFocus(true)}
         onBlur={()=>setIsInputFocus(false)}
       />
