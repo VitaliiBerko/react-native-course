@@ -20,9 +20,9 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <Main/>
-    </Provider>
+    // </Provider>
   );
 }
 // const styles = StyleSheet.create({
