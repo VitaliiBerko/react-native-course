@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Input from "./Input";
 import { useState } from "react";
+import {useNavigation} from '@react-navigation/native'
 import InputPassword from "./InputPassword";
 
 export default function RegistrationForm() {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation()
 
   return (
     <>
@@ -27,6 +29,16 @@ export default function RegistrationForm() {
         />
         <InputPassword password={password} setPassword={setPassword} />
       </View>
+      {
+        <View style={{...styles.container, marginVertical: 10}}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.btnSubmit}>
+            <Text style={styles.btnText}>Зареєструватися</Text>
+          </TouchableOpacity>
+          <TouchableOpacity  activeOpacity={0.8} onPress={()=>navigation.navigate('Login')}>
+            <Text style={styles.link}>Вже є акаунт? Увійти</Text>
+          </TouchableOpacity>
+        </View>
+      }
     </>
   );
 }
@@ -48,6 +60,23 @@ const styles = StyleSheet.create({
   alignItems: 'center',
   gap: 16,
 
-
   },
+  btnSubmit: {
+    width: '100',
+    backgroundColor: '#FF6C00',
+    padding: 16,
+    borderRadius: 50,
+  
+  },
+  btnText: {
+    color: '#FFFFFF',
+  },
+  link: {
+    fontFamily: 'Roboto-Regular',
+    textAlign: 'center',
+    fontSize: 16,
+    lineHeight: 19,
+    color: '#1B4371'
+  }
+
 });

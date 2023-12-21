@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {useNavigation} from '@react-navigation/native'
 import InputPassword from "./InputPassword";
 import Input from "./Input";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation()
   return (
     <>
       <Text style={styles.title}>Увійти</Text>
@@ -29,7 +31,7 @@ export default function LoginForm() {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => console.log(email)}
+          onPress={() => navigation.navigate('Register')}
         >
           <Text>Немає акаунту? Зареєструватися</Text>
         </TouchableOpacity>
