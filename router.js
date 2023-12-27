@@ -6,6 +6,7 @@ import { PostScreen } from "./Screens/main/PostsScreen";
 import { CreatePostsScreen } from "./Screens/main/CreatePostScreen";
 import { ProfileScreen } from "./Screens/main/ProfileScreen";
 import { Dimensions } from "react-native";
+import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
 
 export function Routes() {
   const AuthStack = createStackNavigator();
@@ -35,7 +36,14 @@ export function Routes() {
         headerStyle: { borderBottomWidth: 1, borderBottomColor: "#b3b3b3" },
       }}
     >
-      <Tab.Screen name="Posts" component={PostScreen} />
+      <Tab.Screen name="Posts" component={PostScreen} options={({navigation})=>{
+        return {
+          headerTitle: "Публікації",
+          tabBarIcon: ()=>{return getIcon(ICONS_MAP.grid)},
+          headerRight: ()=> {}
+        }
+        
+      }}/>
       <Tab.Screen name="Create" component={CreatePostsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
