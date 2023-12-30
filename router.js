@@ -5,12 +5,41 @@ import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import { PostScreen } from "./Screens/main/PostsScreen";
 import { CreatePostsScreen } from "./Screens/main/CreatePostScreen";
 import { ProfileScreen } from "./Screens/main/ProfileScreen";
-import { Dimensions } from "react-native";
+import { Dimensions, TouchableOpacity, View } from "react-native";
 import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
+import { LogoutBtn } from "./components/LogoutBtn";
 
 export function Routes() {
   const AuthStack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+
+  const headerRightBtn = () => {
+    <View
+      style={{
+        position: "absolute",
+        right: 8,
+        bottom: 6,
+      }}
+    >
+      <LogoutBtn />
+    </View>;
+  };
+
+  const headerLeftBtn = (navigation) => {
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => {
+        navigation.goback();
+      }}
+      style={{
+        position: "absolute",
+        bottom: 16,
+        paddingHorizontal: 16,
+      }}
+    >
+      {getIcon(ICONS_MAP.arrowLeft)}
+    </TouchableOpacity>;
+  };
 
   return (
     <Tab.Navigator
@@ -36,16 +65,68 @@ export function Routes() {
         headerStyle: { borderBottomWidth: 1, borderBottomColor: "#b3b3b3" },
       }}
     >
-      <Tab.Screen name="Posts" component={PostScreen} options={({navigation})=>{
-        return {
-          headerTitle: "Публікації",
-          tabBarIcon: ()=>{return getIcon(ICONS_MAP.grid)},
-          headerRight: ()=> {}
-        }
-        
-      }}/>
-      <Tab.Screen name="Create" component={CreatePostsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Posts"
+        component={PostScreen}
+        options={({ navigation }) => {
+          return {
+            headerTitle: "Публікації",
+            tabBarIcon: () => {
+              return getIcon(ICONS_MAP.grid);
+            },
+            headerRight: () => {
+              headerRightBtn(navigation);
+            },
+          };
+        }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={CreatePostsScreen}
+        listeners={({ navigation }) => {
+          return {
+            tabPress: (evt) => {
+              navigation.jumpTo(false ? "Profile" : "Create");
+              evt.preventDefault();
+            },
+          };
+        }}
+        options={({ navigation }) => {
+          return {
+            headerTitle: "Створити публікацію",
+            tabBarVisibile: false,
+            tabBarIcon: () => {
+              return getIcon(ICONS_MAP.addWhite);
+            },
+            // tabBarStyle: {
+            //   display: 'none'
+            // },
+            tabBarItemStyle: {
+              maxWidth: 70,
+              height: 40,
+              backgroundColor: "#FF6C00",
+              borderRadius: 20,
+            },
+            headerLeft: () => headerLeftBtn(navigation),
+          };
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        listeners={({ navigation }) => {
+          return {
+            tabPress: (evt) => {
+              navigation.jumpTo("Profile");
+              evt.preventDefault();
+            },
+          };
+        }}
+        options={{
+          // headerShown: false
+          tabBarIcon: () => {return getIcon(ICONS_MAP.user)},
+        }}
+      />
     </Tab.Navigator>
   );
 }
