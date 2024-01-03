@@ -1,10 +1,11 @@
-import { ScrollView, Text } from "react-native"
+import { ScrollView, Text } from "react-native";
 
-export const CreatePostsScreen=()=>{
-    return(
-        <ScrollView style={{backgroundColor: "#ffffff"}}>
-            <Text>CreatePostsScreen</Text>
+import { CreatePostForm } from "../../components/CreatePostForm";
 
-        </ScrollView>
-    )
-}
+export const CreatePostsScreen = ({navigation}) => {
+  return (
+    <ScrollView style={{ backgroundColor: "#ffffff" }}>
+      <CreatePostForm navigation={navigation} />
+    </ScrollView>
+  );
+};
