@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Camera } from "expo-camera";
 import { useEffect, useState } from "react";
 import * as Location from "expo";
@@ -51,7 +51,7 @@ export const CreatePostForm = () => {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={requestPermissionCamera}
-        ></TouchableOpacity>
+        ><Text>Надати дозвіл</Text></TouchableOpacity>
       </View>
     );
   }
@@ -72,3 +72,13 @@ export const CreatePostForm = () => {
 
   return <Text> CreatePostsScreen</Text>;
 };
+
+const styles = StyleSheet.create({
+  btnText: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    lineHeight: 19,
+    textAlign: 'center',
+    color: '#FFFFFF'
+  }
+})
