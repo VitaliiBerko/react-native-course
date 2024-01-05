@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Camera } from "expo-camera";
 import { useEffect, useState } from "react";
-import * as Location from "expo";
+import * as Location from "expo-location";
 
 export const CreatePostForm = () => {
   const [picture, setPicture] = useState("");
@@ -18,16 +18,17 @@ export const CreatePostForm = () => {
 
   useEffect(() => {
     requestPermissionCamera();
-    // (async ()=> {
-    //     const {status}= await Location.requestForegroundPermissionsAsync();
-    //     if (status !=='granted') {
-    //         return;
-    //     }
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
 
-    //     const {
-    //         coords: {latitude, longitude},
-    //     }= await Location.
-    // })
+      const {
+        coords: { latitude, longitude },
+      } = await Location.getCurrentPositionAsync();
+      setLocationCoord({ latitude, longitude });
+    })();
   }, []);
 
   if (!permissionCamera) {
@@ -48,27 +49,23 @@ export const CreatePostForm = () => {
         >
           Нама потрібний ваш дозвіл до доступу до камери
         </Text>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={requestPermissionCamera}
-        ><Text>Надати дозвіл</Text></TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} onPress={requestPermissionCamera}>
+          <Text>Надати дозвіл</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
-  const handleClear = ()=> {
-    setPicture(''),
-    setlocationTitle(''),
-    setTitle('')
+  const handleClear = () => {
+    setPicture(""), setlocationTitle(""), setTitle("");
+  };
 
-  }
-
-  const takePhoto =async()=>{
-    if(cameraRef) {
-        const {uri} = await cameraRef.takePictureAsync();
-        setPicture(uri)
+  const takePhoto = async () => {
+    if (cameraRef) {
+      const { uri } = await cameraRef.takePictureAsync();
+      setPicture(uri);
     }
-  }
+  };
 
   return <Text> CreatePostsScreen</Text>;
 };
@@ -78,7 +75,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
     fontSize: 16,
     lineHeight: 19,
-    textAlign: 'center',
-    color: '#FFFFFF'
-  }
-})
+    textAlign: "center",
+    color: "#FFFFFF",
+  },
+});
