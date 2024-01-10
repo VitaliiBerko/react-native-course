@@ -9,6 +9,8 @@ import { Camera } from "expo-camera";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { CardPicture } from "./CardPicture";
+import { CameraIcon } from "./CameraIcon";
+import { InputCreatePost } from "./InputCreatePost";
 
 export const CreatePostForm = () => {
   const [picture, setPicture] = useState("");
@@ -101,16 +103,34 @@ export const CreatePostForm = () => {
             )}
             <TouchableOpacity
               activeOpacity={0.8}
+              style={styles.cameraBtn}
               onPress={() => {
                 if (picture) {
                   setPicture("");
+                  return;
                 }
+                takePhoto();
               }}
             >
-              <Text style={styles.text}>{picture ? 'Редагувати фото' : 'Завантажити фото'}</Text>
+              <CameraIcon isPicture={picture} />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              if (picture) {
+                setPicture("");
+              }
+            }}
+          >
+            <Text style={styles.text}>
+              {picture ? "Редагувати фото" : "Завантажити фото"}
+            </Text>
+          </TouchableOpacity>
         </View>
+
+            <InputCreatePost name={title} setName={setTitle} location={locationTitle} setLocation={setlocationTitle}/>
+
       </View>
     </View>
   );
@@ -161,9 +181,15 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
     lineHeight: 19,
-    color: '#BDBDBD'
-  }
+    color: "#BDBDBD",
+  },
+  cameraBtn: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -30 }, { translateY: -30 }],
+  },
 });
