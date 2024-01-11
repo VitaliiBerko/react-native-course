@@ -11,8 +11,9 @@ import * as Location from "expo-location";
 import { CardPicture } from "./CardPicture";
 import { CameraIcon } from "./CameraIcon";
 import { InputCreatePost } from "./InputCreatePost";
+import { ICONS_MAP, getIcon } from "./Icons/Icons";
 
-export const CreatePostForm = () => {
+export const CreatePostForm = ({navigation}) => {
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [locationTitle, setlocationTitle] = useState("");
@@ -129,8 +130,43 @@ export const CreatePostForm = () => {
           </TouchableOpacity>
         </View>
 
-            <InputCreatePost name={title} setName={setTitle} location={locationTitle} setLocation={setlocationTitle}/>
+        <InputCreatePost
+          name={title}
+          setName={setTitle}
+          location={locationTitle}
+          setLocation={setlocationTitle}
+        />
 
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{
+              ...styles.btnSubmit,
+              backgroundColor: isDisabled ? "#F6F6F6" : "FF6C00",
+            }}
+            onPress={handleSubmit}
+            disabled={isDisabled}
+          >
+            <Text
+              style={{
+                ...styles.btnText,
+                color: isDisabled ? "#BDBDBD" : "#FFFFFF",
+              }}
+            >
+              Опублікувати
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={styles.trashContainer}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleClear}
+          style={styles.trashBtn}
+        >
+          {getIcon(ICONS_MAP.trash)}
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -191,5 +227,20 @@ const styles = StyleSheet.create({
     top: "50%",
     left: "50%",
     transform: [{ translateX: -30 }, { translateY: -30 }],
+  },
+  trashContainer: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    paddingTop: 8,
+  },
+  trashBtn: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 40,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 20,
   },
 });
