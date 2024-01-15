@@ -80,7 +80,7 @@ export const CreatePostForm = ({navigation}) => {
     setPicture(""), setlocationTitle(""), setTitle("");
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
     navigation.navigate("Posts");
     handleClear();
   };
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   },
   trashContainer: {
     width: "100%",
+    height: "100%",
     display: "flex",
     alignItems: "center",
     paddingTop: 8,

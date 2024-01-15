@@ -9,7 +9,7 @@ import { Dimensions, TouchableOpacity, View } from "react-native";
 import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
 import { LogoutBtn } from "./components/LogoutBtn";
 
-export function Routes() {
+export function Routes({isAuth}) {
   const AuthStack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
