@@ -31,5 +31,8 @@ const authSlice = createSlice({
         state.status = STATUS.error,
         state.error= payload
     })
+    .addCase()
   },
 });
+
+export const authReducer= authSlice.reducer
