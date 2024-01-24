@@ -1,5 +1,12 @@
 import { createAsyncThunk, nanoid } from "@reduxjs/toolkit";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const uploadPicture = async (picture) => {
@@ -59,3 +66,53 @@ export const getPosts = createAsyncThunk("posts/get", async (_, thunkApi) => {
     return thunkApi.rejectWithValue(rejectMessage);
   }
 });
+
+export const createComment = createAsyncThunk(
+  "posts/createComment",
+  async (credentials, thunkApi) => {
+    const { userId, avatar, comment, login, postId } = credentials;
+
+    try {
+      const newComment = {
+        comment,
+        avatar,
+        author: login,
+        authorId: userId,
+        createdAt: new Date().toISOString(),
+      };
+      const postDocRef = doc(db, "posts", postId);
+
+      const commentRef = await addDoc(
+        collection(postDocRef, "comments"),
+        newComment
+      );
+
+      await updateDoc(postDocRef, { commentsCount: increment(1) });
+
+      return { ...newComment, id: commentRef.id };
+    } catch (error) {
+      const rejectMessage = error.message;
+      return thunkApi.rejectWithValue(rejectMessage);
+    }
+  }
+);
+
+export const getComments = createAsyncThunk(
+  "posts/getComments",
+  async (postId, thunkApi) => {
+    try {
+      const querySnapshot = await getDocs(
+        collection(db, "posts", postId, "comments")
+      );
+      const comments = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      return comments;
+    } catch (error) {
+      const rejectMessage = error.message;
+      return thunkApi.rejectWithValue(rejectMessage);
+    }
+  }
+);
