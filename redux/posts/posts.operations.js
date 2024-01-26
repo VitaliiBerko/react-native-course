@@ -5,7 +5,9 @@ import {
   doc,
   getDocs,
   increment,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -66,6 +68,26 @@ export const getPosts = createAsyncThunk("posts/get", async (_, thunkApi) => {
     return thunkApi.rejectWithValue(rejectMessage);
   }
 });
+
+export const getUserPosts = createAsyncThunk(
+  "posts/getUserPosts",
+  async (userId, thunkApi) => {
+    try {
+      const q = query(collection(db, "posts"), where("authorId", "==", userId));
+      const querySnapshot = await getDocs(q);
+
+      const posts = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      return posts;
+    } catch (error) {
+      const rejectMessage = error.message;
+      return thunkApi.rejectWithValue(rejectMessage);
+    }
+  }
+);
 
 export const createComment = createAsyncThunk(
   "posts/createComment",
