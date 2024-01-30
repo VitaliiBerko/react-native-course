@@ -2,9 +2,6 @@ import "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 import React from "react";
-import RegistrationScreen from "./Screens/auth/RegistrationScreen";
-import LoginScreen from "./Screens/auth/LoginScreen";
-import { NavigationContainer } from "@react-navigation/native";
 import {Provider} from "react-redux"
 import { Main } from "./components/Main";
 import store from "./redux/store";

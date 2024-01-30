@@ -9,7 +9,7 @@ import { Dimensions, TouchableOpacity, View } from "react-native";
 import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
 import { LogoutBtn } from "./components/LogoutBtn";
 
-export function Routes({isAuth}) {
+export function Routes({ isAuth }) {
   const AuthStack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
@@ -41,7 +41,7 @@ export function Routes({isAuth}) {
     </TouchableOpacity>;
   };
 
-  return (
+  return isAuth ? (
     <Tab.Navigator
       initialRouteName="Posts"
       screenOptions={{
@@ -124,16 +124,24 @@ export function Routes({isAuth}) {
         }}
         options={{
           // headerShown: false
-          tabBarIcon: () => {return getIcon(ICONS_MAP.user)},
+          tabBarIcon: () => {
+            return getIcon(ICONS_MAP.user);
+          },
         }}
       />
     </Tab.Navigator>
+  ) : (
+    <AuthStack.Navigator initialRouteName="Login">
+      <AuthStack.Screen
+        options={{ headerShown: false }}
+        name="Login"
+        component={LoginScreen}
+      />
+      <AuthStack.Screen
+        options={{ headerShown: false }}
+        name="Register"
+        component={RegistrationScreen}
+      />
+    </AuthStack.Navigator>
   );
-}
-
-{
-  /* <AuthStack.Navigator initialRouteName="Login">
-      <AuthStack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-      <AuthStack.Screen options={{headerShown: false}} name="Register" component={RegistrationScreen} />
-    </AuthStack.Navigator> */
 }
