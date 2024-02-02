@@ -4,7 +4,6 @@ import {
   onAuthStateChanged,
   signInWithCredential,
   signInWithEmailAndPassword,
-  signOut,
   updateCurrentUser,
   updateProfile,
 } from "firebase/auth";
@@ -52,36 +51,35 @@ export const signInUser = createAsyncThunk(
       };
     } catch (error) {
       const rejectMessage = error.message;
-      return thunkApi.rejectWithValue(rejectMessage)
+      return thunkApi.rejectWithValue(rejectMessage);
     }
   }
 );
 
 export const signOutUser = createAsyncThunk(
-  'auth/signOutUser',
-  async (_, thunkApi)=>{
+  "auth/signOut",
+  async (_, thunkApi) => {
     try {
-      await auth.signOut()
+      await auth.signOut();
     } catch (error) {
-      const rejectMessage= error.message;
-      return thunkApi.rejectWithValue(rejectMessage)
-      
+      const rejectMessage = error.message;
+      return thunkApi.rejectWithValue(rejectMessage);
     }
   }
-)
+);
 
 export const getCurrentlySignedIn = createAsyncThunk(
-  'auth/currentlySignedIn',
-  async (_, thunkApi)=> {
+  "auth/currentlySignedIn",
+  async (_, thunkApi) => {
     try {
-      onAuthStateChanged(auth, async(user)=>{
-        if(!user) {
-          await thunkApi.dispatch(signOutUser()).unwrap()
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          await thunkApi.dispatch(signOutUser()).unwrap();
         }
-      })
+      });
     } catch (error) {
-      const rejectMessage= error.message;
-      return thunkApi.rejectWithValue(rejectMessage)
+      const rejectMessage = error.message;
+      return thunkApi.rejectWithValue(rejectMessage);
     }
   }
-)
+);

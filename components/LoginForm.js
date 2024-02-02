@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import InputPassword from "./InputPassword";
 import Input from "./Input";
+import { signInUser } from "../redux/auth/auth.operations";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    try {
+      await dispatch(signInUser({ email, password })).unwrap();
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
   return (
     <>
       <Text style={styles.title}>Увійти</Text>
@@ -25,13 +38,13 @@ export default function LoginForm() {
         <TouchableOpacity
           style={styles.btnSubmit}
           activeOpacity={0.8}
-          onPress={() => console.log("Credentials", `${email} +${password}`)}
+          onPress={handleSubmit}
         >
           <Text style={styles.btnTitle}>Увійти</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate("Register")}
         >
           <Text>Немає акаунту? Зареєструватися</Text>
         </TouchableOpacity>

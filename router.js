@@ -14,31 +14,35 @@ export function Routes({ isAuth }) {
   const Tab = createBottomTabNavigator();
 
   const headerRightBtn = () => {
-    <View
-      style={{
-        position: "absolute",
-        right: 8,
-        bottom: 6,
-      }}
-    >
-      <LogoutBtn />
-    </View>;
+    return (
+      <View
+        style={{
+          position: "absolute",
+          right: 8,
+          bottom: 6,
+        }}
+      >
+        <LogoutBtn />
+      </View>
+    );
   };
 
   const headerLeftBtn = (navigation) => {
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => {
-        navigation.goback();
-      }}
-      style={{
-        position: "absolute",
-        bottom: 16,
-        paddingHorizontal: 16,
-      }}
-    >
-      {getIcon(ICONS_MAP.arrowLeft)}
-    </TouchableOpacity>;
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.goBack();
+        }}
+        style={{
+          position: "absolute",
+          bottom: 16,
+          paddingHorizontal: 16,
+        }}
+      >
+        {getIcon(ICONS_MAP.arrowLeft)}
+      </TouchableOpacity>
+    );
   };
 
   return isAuth ? (
@@ -74,9 +78,7 @@ export function Routes({ isAuth }) {
             tabBarIcon: () => {
               return getIcon(ICONS_MAP.grid);
             },
-            headerRight: () => {
-              headerRightBtn(navigation);
-            },
+            headerRight: () => headerRightBtn(),
           };
         }}
       />
@@ -107,7 +109,7 @@ export function Routes({ isAuth }) {
               backgroundColor: "#FF6C00",
               borderRadius: 20,
             },
-            headerLeft: () => headerLeftBtn(navigation),
+            headerLeft: () => headerLeftBtn(navigation)
           };
         }}
       />

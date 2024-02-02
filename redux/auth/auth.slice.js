@@ -2,7 +2,7 @@ import { STATUS } from "../../constants/status";
 import { createSlice } from "@reduxjs/toolkit";
 import { signInUser, signOutUser, signUpUser } from "./auth.operations";
 import persistReducer from "redux-persist/es/persistReducer";
-import  AsyncStorage  from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { storage } from "../../firebase/config";
 const initialState = {
   user: {
@@ -50,10 +50,7 @@ const authSlice = createSlice({
       .addCase(signOutUser.pending, (state) => {
         state.status = STATUS.loading;
       })
-      .addCase(signOutUser.fulfilled, (state) => {
-        state.status = STATUS.success;
-        state = initialState;
-      })
+      .addCase(signOutUser.fulfilled, () => initialState)
       .addCase(signOutUser.rejected, (state, { payload }) => {
         state.error = payload;
         state = initialState;
@@ -61,14 +58,11 @@ const authSlice = createSlice({
   },
 });
 
-const persistConfig ={
-  key: 'auth',
-  storage: AsyncStorage
-}
+const persistConfig = {
+  key: "auth",
+  storage: AsyncStorage,
+};
 
-export const authReducer = persistReducer(
-  persistConfig,
-  authSlice.reducer
-);
+export const authReducer = persistReducer(persistConfig, authSlice.reducer);
 
 // export const authReducer = authSlice.reducer

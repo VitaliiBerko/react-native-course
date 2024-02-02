@@ -13,6 +13,7 @@ export const Main = () => {
     dispatch(getCurrentlySignedIn());
   }, [dispatch]);
 
+
   return (
     <NavigationContainer>
       <Routes isAuth={isLoggedIn} />
