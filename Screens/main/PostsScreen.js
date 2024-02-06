@@ -1,23 +1,35 @@
-import { ScrollView, StyleSheet, View,Text } from "react-native"
+import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPosts } from "../../redux/posts/posts.selectors";
+import { useEffect } from "react";
+import{getPosts} from '../../redux/posts/posts.operations'
+import { UserCard } from "../../components/UserCard";
 
-export const PostScreen =()=>{
-    return (
-        <ScrollView style={{backgroundColor: "#FFFFFF"}}>
-            <View style={styles.container}>
-                <Text>PostScreen</Text>
-            </View>
-        </ScrollView>
-    )
-}
+
+export const PostScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPosts);
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [navigation]);
+
+  return (
+    <ScrollView style={{ backgroundColor: "#FFFFFF" }}>
+      <View style={styles.container}>
+      <UserCard/>
+      {posts.map((post)=>({}))}
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 32,
-        height: "100%",
-        paddingHorizontal: 16,
-        paddingVertical: 32,
-
-    }
-})
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 32,
+    height: "100%",
+    paddingHorizontal: 16,
+    paddingVertical: 32,
+  },
+});

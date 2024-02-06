@@ -125,12 +125,16 @@ export function Routes({ isAuth }) {
           };
         }}
         options={{
-          // headerShown: false
           tabBarIcon: () => {
             return getIcon(ICONS_MAP.user);
           },
         }}
       />
+      <Tab.Screen 
+      name="Comments"
+      />
+      <Tab.Screen name="Map"/>
+
     </Tab.Navigator>
   ) : (
     <AuthStack.Navigator initialRouteName="Login">
