@@ -9,6 +9,7 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { CardPicture } from "../../components/CardPicture";
 import { STATUS } from "../../constants/status";
 import { CommentCard } from "../../components/CommentCard";
+import { InputCreateComment } from "../../components/InputCreateComment";
 
 export const CommentsScreen = ({ route }) => {
   const { postId, picture } = route.params;
@@ -33,7 +34,7 @@ export const CommentsScreen = ({ route }) => {
               <CommentCard key={comment.id} index={index} comment={comment} />
             ))}
         </View>
-        
+        <InputCreateComment postId={postId}/>
       </View>
     </ScrollView>
   );

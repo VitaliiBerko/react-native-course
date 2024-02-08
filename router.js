@@ -8,6 +8,8 @@ import { ProfileScreen } from "./Screens/main/ProfileScreen";
 import { Dimensions, TouchableOpacity, View } from "react-native";
 import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
 import { LogoutBtn } from "./components/LogoutBtn";
+import { CommentsScreen } from "./Screens/main/CommentsScreen";
+import { MapScreen } from "./Screens/main/MapScreen";
 
 export function Routes({ isAuth }) {
   const AuthStack = createStackNavigator();
@@ -109,7 +111,7 @@ export function Routes({ isAuth }) {
               backgroundColor: "#FF6C00",
               borderRadius: 20,
             },
-            headerLeft: () => headerLeftBtn(navigation)
+            headerLeft: () => headerLeftBtn(navigation),
           };
         }}
       />
@@ -130,11 +132,38 @@ export function Routes({ isAuth }) {
           },
         }}
       />
-      <Tab.Screen 
-      name="Comments"
+      <Tab.Screen
+        name="Comments"
+        component={CommentsScreen}
+        options={({ navigation }) => {
+          return {
+            headerTitle: "Коментарі",
+            tabBarStyle: {
+              display: "none",
+            },
+            tabBarItemStyle: {
+              display: "none",
+            },
+            headerLeft: () => headerLeftBtn(navigation),
+          };
+        }}
       />
-      <Tab.Screen name="Map"/>
-
+      <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={({ navigation }) => {
+          return {
+            headerTitle: "Карта",
+            tabBarStyle: {
+              display: "none",
+            },
+            tabBarItemStyle: {
+              display: "none",
+            },
+            headerLeft: () => headerLeftBtn(navigation),
+          };
+        }}
+      />
     </Tab.Navigator>
   ) : (
     <AuthStack.Navigator initialRouteName="Login">
