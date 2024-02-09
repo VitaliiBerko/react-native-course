@@ -10,10 +10,27 @@ import { ICONS_MAP, getIcon } from "./components/Icons/Icons";
 import { LogoutBtn } from "./components/LogoutBtn";
 import { CommentsScreen } from "./Screens/main/CommentsScreen";
 import { MapScreen } from "./Screens/main/MapScreen";
+import { useState } from "react";
 
 export function Routes({ isAuth }) {
   const AuthStack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+
+  const [isUserTabActive, setIsUserTabActive] = useState(false);
+
+  const toggleTabItems = (evt) => {
+    const { index } = evt.data.state;
+
+    if (index === 2 && isUserTabActive) {
+      setIsUserTabActive(true);
+      return;
+    }
+    if (index === 2) {
+      setIsUserTabActive(!isUserTabActive);
+      return;
+    }
+    setIsUserTabActive(false);
+  };
 
   const headerRightBtn = () => {
     return (
@@ -50,6 +67,7 @@ export function Routes({ isAuth }) {
   return isAuth ? (
     <Tab.Navigator
       initialRouteName="Posts"
+      screenListeners={{ state: toggleTabItems }}
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -90,7 +108,7 @@ export function Routes({ isAuth }) {
         listeners={({ navigation }) => {
           return {
             tabPress: (evt) => {
-              navigation.jumpTo(false ? "Profile" : "Create");
+              navigation.jumpTo(isUserTabActive ? "Profile" : "Create");
               evt.preventDefault();
             },
           };
@@ -100,11 +118,14 @@ export function Routes({ isAuth }) {
             headerTitle: "Створити публікацію",
             tabBarVisibile: false,
             tabBarIcon: () => {
-              return getIcon(ICONS_MAP.addWhite);
+              return getIcon(
+                isUserTabActive ? ICONS_MAP.user : ICONS_MAP.addWhite
+              );
             },
-            // tabBarStyle: {
-            //   display: 'none'
-            // },
+            tabBarStyle: {
+              display: "none",
+            },
+
             tabBarItemStyle: {
               maxWidth: 70,
               height: 40,
@@ -121,14 +142,15 @@ export function Routes({ isAuth }) {
         listeners={({ navigation }) => {
           return {
             tabPress: (evt) => {
-              navigation.jumpTo("Profile");
+              navigation.jumpTo(isUserTabActive ? "Create" : "Profile");
               evt.preventDefault();
             },
           };
         }}
         options={{
+          headerShown: false,
           tabBarIcon: () => {
-            return getIcon(ICONS_MAP.user);
+            return getIcon(isUserTabActive? ICONS_MAP.add: ICONS_MAP.user);
           },
         }}
       />

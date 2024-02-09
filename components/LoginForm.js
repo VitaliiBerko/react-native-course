@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import InputPassword from "./InputPassword";
 import Input from "./Input";
 import { signInUser } from "../redux/auth/auth.operations";
+import { Avatar } from "./Avatar";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export default function LoginForm() {
   };
   return (
     <>
+    
       <Text style={styles.title}>Увійти</Text>
       <View style={styles.container}>
         <Input

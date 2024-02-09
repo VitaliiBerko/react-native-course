@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import InputPassword from "./InputPassword";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../redux/auth/auth.operations";
+import { Avatar } from "./Avatar";
 
 export default function RegistrationForm() {
   const [avatar, setAvatar] = useState("");
@@ -28,6 +29,7 @@ export default function RegistrationForm() {
 
   return (
     <>
+      <Avatar avatar={avatar} />
       <Text style={styles.title}>Реєстрація</Text>
       <View style={styles.container}>
         <Input

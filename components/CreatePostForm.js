@@ -12,12 +12,18 @@ import { CardPicture } from "./CardPicture";
 import { CameraIcon } from "./CameraIcon";
 import { InputCreatePost } from "./InputCreatePost";
 import { ICONS_MAP, getIcon } from "./Icons/Icons";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../redux/auth/auth.selector";
+import { createPosts } from "../redux/posts/posts.operations";
 
-export const CreatePostForm = ({navigation}) => {
+export const CreatePostForm = ({ navigation }) => {
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [locationTitle, setlocationTitle] = useState("");
   const [locationCoords, setLocationCoord] = useState(null);
+  const { login, userId } = useSelector(selectUser);
+
+  const dispatch = useDispatch();
 
   const [permissionCamera, requestPermissionCamera] =
     Camera.useCameraPermissions();
@@ -80,7 +86,18 @@ export const CreatePostForm = ({navigation}) => {
     setPicture(""), setlocationTitle(""), setTitle("");
   };
 
-  const handleSubmit =  () => {
+  const handleSubmit = async () => {
+    await dispatch(
+      createPosts({
+        picture,
+        title,
+        location: locationTitle,
+        coords: locationCoords,
+        login,
+        userId,
+      })
+    ).unwrap();
+
     navigation.navigate("Posts");
     handleClear();
   };
@@ -142,10 +159,11 @@ export const CreatePostForm = ({navigation}) => {
             activeOpacity={0.8}
             style={{
               ...styles.btnSubmit,
-              backgroundColor: isDisabled ? "#F6F6F6" : "FF6C00",
+              backgroundColor: isDisabled ? "#F6F6F6" : "#FF6C00",
             }}
             onPress={handleSubmit}
-            disabled={isDisabled}
+
+            // disabled={isDisabled}
           >
             <Text
               style={{

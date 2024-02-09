@@ -4,6 +4,9 @@ import addPicture from "../assets/images/add.png";
 import removePicture from "../assets/images/remove.png";
 const ADD_PICTURE = Image.resolveAssetSource(addPicture).uri;
 const REMOVE_PICTURE = Image.resolveAssetSource(removePicture).uri;
+
+
+
 export const Avatar = ({ avatar }) => {
   return (
     <View style={styles.imageContainer}>
