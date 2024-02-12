@@ -10,7 +10,6 @@ export const PostScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const posts = useSelector(selectPosts);
 
-
   useEffect(() => {
     dispatch(getPosts());
   }, [navigation]);
@@ -20,7 +19,6 @@ export const PostScreen = ({ navigation }) => {
       <View style={styles.container}>
         <UserCard />
         {posts.map((post) => (
-          
           <PostCard key={post.id} {...post} navigation={navigation} />
         ))}
       </View>
