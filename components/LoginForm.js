@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   btnTitle: {
     color: "#FFF",
     textAlign: "center",
-    fontFamily: "Roboto",
+    fontFamily: "Roboto-Medium",
     fontSize: 16,
     fontWeight: 400,
     lineHeight: 19,

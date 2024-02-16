@@ -3,7 +3,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
 } from "react-native";
 import MainContainer from "../../components/MainContainer";

@@ -20,7 +20,7 @@ export const CreatePostForm = ({ navigation }) => {
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [locationTitle, setlocationTitle] = useState("");
-  const [locationCoords, setLocationCoord] = useState(null);
+  const [locationCoords, setLocationCoords] = useState(null);
   const { login, userId } = useSelector(selectUser);
 
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ export const CreatePostForm = ({ navigation }) => {
       const {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
-      setLocationCoord({ latitude, longitude });
+      setLocationCoords({ latitude, longitude });
     })();
   }, []);
 
@@ -163,7 +163,7 @@ export const CreatePostForm = ({ navigation }) => {
             }}
             onPress={handleSubmit}
 
-            // disabled={isDisabled}
+            disabled={isDisabled}
           >
             <Text
               style={{

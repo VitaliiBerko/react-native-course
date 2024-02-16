@@ -10,14 +10,16 @@ import {
   where,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../../firebase/config";
 
 const uploadPicture = async (picture) => {
   const response = await fetch(picture);
   const file = await response.blob();
 
-  const sotrageRef = ref(storage, `images/${nanoid()}.jpg`);
-  const snapshot = await uploadBytes(sotrageRef, file);
+  const storageRef = ref(storage, `images/${nanoid()}.jpg`);
+  const snapshot = await uploadBytes(storageRef, file);
   const url = await getDownloadURL(snapshot.ref);
+
   return url;
 };
 
@@ -28,7 +30,8 @@ export const createPosts = createAsyncThunk(
     const { userId, coords, login, location, picture, title } = credentials;
 
     try {
-      const pictureUrl = uploadPicture(picture);
+      const pictureUrl = await uploadPicture(picture);
+
       const newPost = {
         picture: pictureUrl,
         title,
@@ -40,11 +43,16 @@ export const createPosts = createAsyncThunk(
         likesCount: 0,
         date: new Date().toISOString(),
       };
+    
+  
       try {
         const postRef = await addDoc(collection(db, "posts"), newPost);
+
         return { ...newPost, id: postRef.id };
+
       } catch (error) {
-        console.log("Error:", error);
+        console.log("Error adding document:", error);
+        
       }
     } catch (error) {
       const rejectMessage = error.message;
