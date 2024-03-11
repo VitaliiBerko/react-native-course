@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: "absolute",
-    top: 18,
+    top: 80,
     left: 0,
   },
 });

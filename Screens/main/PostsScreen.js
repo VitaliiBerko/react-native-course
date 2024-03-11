@@ -19,7 +19,7 @@ export const PostScreen = ({ navigation }) => {
       <View style={styles.container}>
         <UserCard />
         {posts.map((post) => (
-          <PostCard key={ post.id} {...post} navigation={navigation} />
+          <PostCard key={post.id} {...post} navigation={navigation} />
         ))}
       </View>
     </ScrollView>
